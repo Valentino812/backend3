@@ -1,12 +1,24 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const session = require('express-session'); //2.SESSIONS
 
 const app = express();
 
 app.set("view engine", "ejs");
 
-app.use(express.json()); // Untuk membaca JSON di dari request
-app.use(express.urlencoded({ extended: true })); // Untuk membaca form data (x-www-form-urlencoded)
+// 2.SESSIONS 
+// body-parser to parse request body
+app.use(bodyParser.urlencoded());
+
+// static files
+app.use(express.static('public'));
+
+// enabling session
+app.use(session({
+    secret: 'some_secret_key',
+    cookie: {}
+}));
+
 
 // Routes
 const index = require("./routes/index");
