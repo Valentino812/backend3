@@ -13,7 +13,7 @@ router.post("/login", async function (req, res) {
         res.redirect("/");
     } else {
         return res.render("pages/login", {
-            error: "Invalid username or password"
+            error: "Wrong username or password"
         });
     }
 });
