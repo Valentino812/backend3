@@ -27,6 +27,9 @@
                         <input type="password" class="form-control" name="password" required>
                     </div>
                     <input type="submit" class="btn btn-success" name="submit" value="Login">
+                    <% if (locals.error) { %>
+                        <span class="text-danger pl-2"><%= error %></span>
+                    <% } %>  
                 </form>
             </div>
         </div>
