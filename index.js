@@ -1,44 +1,27 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const session = require('express-session'); //2.SESSIONS
-const layouts = require('express-ejs-layouts'); //4.LAYOUTS
+// index.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const app = express();
 
-// body-parser to parse request body
-app.use(bodyParser.urlencoded());
-
-// 4.LAYOUTS
-// use layouts
-app.use(layouts);
-app.set('layout', 'layouts/main.ejs');
-
-// place all styles block in the layout at the head
-app.set("layout extractStyles", true)
-
-// place all scripts block in the layout at the end
-app.set("layout extractScripts", true)
-
-app.set("view engine", "ejs");
-
-// static files
+// Set EJS as templating engine
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
-
-
-// 2.SESSIONS 
-// enabling session
 app.use(session({
-    secret: 'some_secret_key',
-    cookie: {}
+  secret: 'some_secret_key',
+  resave: false,
+  saveUninitialized: true,
 }));
 
-
 // Routes
-const index = require("./routes/index");
-const auth = require("./routes/auth");
+const authRoutes = require('./routes/auth');
+const indexRoutes = require('./routes/index');
+const todoRoutes = require('./routes/todo');
 
-app.use('/', index)
-app.use("/auth", auth);
+app.use('/', indexRoutes);
+app.use('/auth', authRoutes);
+app.use('/todo', todoRoutes);
 
-app.listen(3000)
-console.log("Server is running on port 3000");
+app.listen(3000, () => console.log('Server runs at port 3000...'));
