@@ -1,14 +1,19 @@
-// index.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const app = express();
 
-// Set EJS as templating engine
+// set the view engine to ejs
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: true }));
+
+// body-parser to parse request body
+app.use(bodyParser.urlencoded());
+
+// static files
 app.use(express.static('public'));
+
+// Enabling sessions
 app.use(session({
   secret: 'some_secret_key',
   resave: false,
